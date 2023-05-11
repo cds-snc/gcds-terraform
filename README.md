@@ -1,10 +1,12 @@
-# Generic Project Template
+# GC Design System Terraform
+GC Design System Terraform defines the infrastructure code used to deploy the:
+- Content Delivery Network (CDN) for the Design System's compiled assets; and
+- DNS records.
 
-This repository provides some base files for setting up a repository at
-CDS. Plan is to create more project template for specific technologies:
+## Local installation
+- Clone the repo `git clone https://github.com/cds-snc/gcds-terraform`.
+- Start the project's [devcontainer](https://code.visualstudio.com/docs/devcontainers/tutorial).
 
-- project-template-terraform
-- project-template-python
-- project-template-nodejs
+Or:
 
-Note that default community health files are maintained at https://github.com/cds-snc/.github 
+- Open the project in a [GitHub Codespace](https://docs.github.com/en/codespaces/overview).

@@ -1,0 +1,27 @@
+{
+	"name": "gcds-terraform",
+	"image": "mcr.microsoft.com/vscode/devcontainers/base:buster",
+	"containerEnv": {
+		"SHELL": "/bin/zsh"
+	},
+	"features": {
+		"terraform": {
+			"version": "1.4.6",
+			"tflint": "latest",
+			"terragrunt": "0.45.11"
+		},
+		"aws-cli": {
+			"version": "latest"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"hashicorp.terraform",
+				"github.copilot",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+	"remoteUser": "vscode"
+}
