@@ -1,0 +1,3 @@
+skip-check:
+  - CKV2_AWS_38 # Route53: DNS Secruity Extensions (DNSSEC) signing not required
+  - CKV_AWS_86  # CloudFront: Access logging not required
