@@ -5,7 +5,8 @@ locals {
 inputs = {
   product_name                 = "gc-design-system"
   account_id                   = "${local.vars.inputs.account_id}"
-  domain                       = "${local.vars.inputs.domain}"
+  domain_en                    = "${local.vars.inputs.domain_en}"
+  domain_fr                    = "${local.vars.inputs.domain_fr}"
   env                          = "${local.vars.inputs.env}"
   region                       = "ca-central-1"
   billing_code                 = "${local.vars.inputs.cost_center_code}"

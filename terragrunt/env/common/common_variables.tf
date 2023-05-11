@@ -8,8 +8,13 @@ variable "cbs_satellite_bucket_name" {
   type        = string
 }
 
-variable "domain" {
-  description = "(Required) Domain name of the product"
+variable "domain_en" {
+  description = "(Required) English domain name of the product"
+  type        = string
+}
+
+variable "domain_fr" {
+  description = "(Required) French domain name of the product"
   type        = string
 }
 
