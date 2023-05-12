@@ -41,3 +41,7 @@ jobs:
       - name: Apply route53
         working-directory: terragrunt/env/production/route53
         run: terragrunt apply --terragrunt-non-interactive -auto-approve
+
+      - name: Apply CDN
+        working-directory: terragrunt/env/production/cdn
+        run: terragrunt apply --terragrunt-non-interactive -auto-approve        
