@@ -3,14 +3,13 @@ locals {
 }
 
 inputs = {
-  product_name                 = "gc-design-system"
-  account_id                   = "${local.vars.inputs.account_id}"
-  domain_en                    = "${local.vars.inputs.domain_en}"
-  domain_fr                    = "${local.vars.inputs.domain_fr}"
-  env                          = "${local.vars.inputs.env}"
-  region                       = "ca-central-1"
-  billing_code                 = "${local.vars.inputs.cost_center_code}"
-  cbs_satellite_bucket_name    = "cbs-satellite-${local.vars.inputs.account_id}"
+  product_name              = "gc-design-system"
+  account_id                = "${local.vars.inputs.account_id}"
+  domain_cdn                = "${local.vars.inputs.domain_cdn}"
+  env                       = "${local.vars.inputs.env}"
+  region                    = "ca-central-1"
+  billing_code              = "${local.vars.inputs.cost_center_code}"
+  cbs_satellite_bucket_name = "cbs-satellite-${local.vars.inputs.account_id}"
 }
 
 generate "provider" {
