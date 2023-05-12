@@ -1,3 +1,5 @@
 skip-check:
+  - CKV2_AWS_32 # CloudFront: CDN appropriate response headers policy has been applied
   - CKV2_AWS_38 # Route53: DNS Secruity Extensions (DNSSEC) signing not required
+  - CKV_AWS_68  # CloudFront: WAF ACL not required for the CDN
   - CKV_AWS_86  # CloudFront: Access logging not required
