@@ -1,5 +1,5 @@
 module "cdn_origin" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v6.1.1"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v6.1.5"
   bucket_name       = "${var.product_name}-${var.env}-cdn"
   billing_tag_value = var.billing_code
 
