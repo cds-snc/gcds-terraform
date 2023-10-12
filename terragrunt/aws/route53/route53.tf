@@ -7,8 +7,17 @@ resource "aws_route53_zone" "content_delivery_network" {
   }
 }
 
-resource "aws_route53_zone" "website" {
-  name = var.domain_website
+resource "aws_route53_zone" "website_en" {
+  name = var.domain_website_en
+
+  tags = {
+    CostCentre = var.billing_code
+    Terraform  = true
+  }
+}
+
+resource "aws_route53_zone" "website_fr" {
+  name = var.domain_website_fr
 
   tags = {
     CostCentre = var.billing_code
