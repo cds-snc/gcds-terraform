@@ -45,3 +45,9 @@ jobs:
       - name: Apply website
         working-directory: terragrunt/env/production/website
         run: terragrunt apply --terragrunt-non-interactive -auto-approve        
+
+      - name: Slack message on failure
+        if: failure()
+        run: |
+          json='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":":red: GitHub workflow failed: <https://github.com/cds-snc/gcds-terraform/actions/workflows/terraform-apply-production.yml|Terraform apply production>"}}]}'
+          curl -X POST -H 'Content-type: application/json' --data "$json" ${{ secrets.SLACK_WEBHOOK_OPS }}  
