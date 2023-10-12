@@ -6,6 +6,7 @@ inputs = {
   product_name              = "gc-design-system"
   account_id                = "${local.vars.inputs.account_id}"
   domain_cdn                = "${local.vars.inputs.domain_cdn}"
+  domain_website            = "${local.vars.inputs.domain_website}"
   env                       = "${local.vars.inputs.env}"
   region                    = "ca-central-1"
   billing_code              = "${local.vars.inputs.cost_center_code}"

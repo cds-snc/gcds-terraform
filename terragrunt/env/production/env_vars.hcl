@@ -3,4 +3,5 @@ inputs = {
   env              = "production"
   cost_center_code = "gc-design-system-production"
   domain_cdn       = "cdn.design-system.alpha.canada.ca"
+  domain_website   = "design.cdssandbox.xyz"
 }

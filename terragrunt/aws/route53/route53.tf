@@ -6,3 +6,12 @@ resource "aws_route53_zone" "content_delivery_network" {
     Terraform  = true
   }
 }
+
+resource "aws_route53_zone" "website" {
+  name = var.domain_website
+
+  tags = {
+    CostCentre = var.billing_code
+    Terraform  = true
+  }
+}
