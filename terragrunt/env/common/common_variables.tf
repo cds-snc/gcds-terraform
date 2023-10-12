@@ -13,6 +13,11 @@ variable "domain_cdn" {
   type        = string
 }
 
+variable "domain_website" {
+  description = "(Required) Domain name of the product's website"
+  type        = string
+}
+
 variable "env" {
   description = "The current running environment"
   type        = string

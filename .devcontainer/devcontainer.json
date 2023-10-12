@@ -6,9 +6,9 @@
 	},
 	"features": {
 		"terraform": {
-			"version": "1.4.6",
+			"version": "1.6.1",
 			"tflint": "latest",
-			"terragrunt": "0.45.11"
+			"terragrunt": "0.52.1"
 		},
 		"aws-cli": {
 			"version": "latest"
