@@ -13,8 +13,13 @@ variable "domain_cdn" {
   type        = string
 }
 
-variable "domain_website" {
-  description = "(Required) Domain name of the product's website"
+variable "domain_website_en" {
+  description = "(Required) Domain name of the product's English website"
+  type        = string
+}
+
+variable "domain_website_fr" {
+  description = "(Required) Domain name of the product's French website"
   type        = string
 }
 
