@@ -1,5 +1,5 @@
 resource "aws_amplify_app" "design_system_docs" {
-  name = "Design System"
+  name       = "Design System"
   repository = "https://github.com/cds-snc/gcds-docs"
 
   # Github personal access token
