@@ -51,7 +51,6 @@ resource "aws_amplify_branch" "main" {
 }
 
 resource "aws_amplify_domain_association" "design_system_en" {
-
   app_id      = aws_amplify_app.design_system_docs.id
   domain_name = var.domain_website_en
 
@@ -69,7 +68,6 @@ resource "aws_amplify_domain_association" "design_system_en" {
 }
 
 resource "aws_amplify_domain_association" "design_system_fr" {
-
   app_id      = aws_amplify_app.design_system_docs.id
   domain_name = var.domain_website_fr
 
