@@ -19,14 +19,14 @@ resource "aws_amplify_app" "design_system_docs" {
   custom_rule {
     source = var.domain_website_en
     status = "302"
-    target = var.domain_website_en + "/en"
+    target = "${var.domain}/en"
   }
 
   # Redirect for french website
   custom_rule {
     source = var.domain_website_fr
     status = "302"
-    target = var.domain_website_fr + "/fr"
+    target = "${var.domain}/fr"
   }
 
   auto_branch_creation_config {
