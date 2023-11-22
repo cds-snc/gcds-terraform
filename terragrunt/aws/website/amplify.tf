@@ -1,5 +1,5 @@
-resource "aws_amplify_app" "design_system_docs" {
-  name       = "Design System"
+resource "aws_amplify_app" "design_system_docs_en" {
+  name       = "Design System (EN)"
   repository = "https://github.com/cds-snc/gcds-docs"
 
   # Github personal access token
@@ -8,25 +8,25 @@ resource "aws_amplify_app" "design_system_docs" {
 
   build_spec = file("${path.module}/build_spec/amplify.yml")
 
-  # The default rewrites and redirects added by the Amplify Console.
+  # 404 redirects
   custom_rule {
     source = "/<*>"
+    target = "/404"
     status = "404"
-    target = "/index.html"
   }
 
-  # Redirect for english website
+  # Redirect for the french website
   custom_rule {
-    source = var.domain_website_en
-    status = "302"
-    target = "${var.domain_website_en}/en"
+    source = "/fr/<*>"
+    target = "https://${var.domain_website_fr}/fr/<*>"
+    status = "301"
   }
 
-  # Redirect for french website
+  # Redirect for the homepage
   custom_rule {
-    source = var.domain_website_fr
-    status = "302"
-    target = "${var.domain_website_fr}/fr"
+    source = "/"
+    target = "/en/"
+    status = "200"
   }
 
   auto_branch_creation_config {
@@ -38,8 +38,61 @@ resource "aws_amplify_app" "design_system_docs" {
   }
 }
 
-resource "aws_amplify_branch" "main" {
-  app_id      = aws_amplify_app.design_system_docs.id
+resource "aws_amplify_app" "design_system_docs_fr" {
+  name       = "Design System (FR)"
+  repository = "https://github.com/cds-snc/gcds-docs"
+
+  # Github personal access token
+  # -- needed when setting up amplify or making changes
+  access_token = var.gh_access_token
+
+  build_spec = file("${path.module}/build_spec/amplify.yml")
+
+  # 404 redirects
+  custom_rule {
+    source = "/<*>"
+    target = "/404"
+    status = "404"
+  }
+
+  # Redirect for english website
+  custom_rule {
+    source = "/en/<*>"
+    target = "https://${var.domain_website_en}/en/<*>"
+    status = "301"
+  }
+
+  # Redirect for the homepage
+  custom_rule {
+    source = "/"
+    target = "/fr/"
+    status = "200"
+  }
+
+  auto_branch_creation_config {
+    # Enable auto build for the created branch.
+    enable_auto_build             = true
+    enable_pull_request_preview   = true
+    pull_request_environment_name = "rc"
+    stage                         = "PRODUCTION"
+  }
+}
+
+
+resource "aws_amplify_branch" "main_en" {
+  app_id      = aws_amplify_app.design_system_docs_en.id
+  branch_name = "main"
+
+  # Could be one of: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
+  stage = "PRODUCTION"
+
+  display_name = "production"
+
+  enable_pull_request_preview = false
+}
+
+resource "aws_amplify_branch" "main_fr" {
+  app_id      = aws_amplify_app.design_system_docs_fr.id
   branch_name = "main"
 
   # Could be one of: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
@@ -51,35 +104,25 @@ resource "aws_amplify_branch" "main" {
 }
 
 resource "aws_amplify_domain_association" "design_system_en" {
-  app_id      = aws_amplify_app.design_system_docs.id
+  app_id      = aws_amplify_app.design_system_docs_en.id
   domain_name = var.domain_website_en
 
   wait_for_verification = false
 
   sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
+    branch_name = aws_amplify_branch.main_en.branch_name
     prefix      = ""
-  }
-
-  sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
-    prefix      = "www"
   }
 }
 
 resource "aws_amplify_domain_association" "design_system_fr" {
-  app_id      = aws_amplify_app.design_system_docs.id
+  app_id      = aws_amplify_app.design_system_docs_fr.id
   domain_name = var.domain_website_fr
 
   wait_for_verification = false
 
   sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
+    branch_name = aws_amplify_branch.main_fr.branch_name
     prefix      = ""
-  }
-
-  sub_domain {
-    branch_name = aws_amplify_branch.main.branch_name
-    prefix      = "www"
   }
 }
