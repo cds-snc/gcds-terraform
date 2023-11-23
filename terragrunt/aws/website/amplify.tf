@@ -28,14 +28,6 @@ resource "aws_amplify_app" "design_system_docs_en" {
     target = "/en/"
     status = "200"
   }
-
-  auto_branch_creation_config {
-    # Enable auto build for the created branch.
-    enable_auto_build             = true
-    enable_pull_request_preview   = true
-    pull_request_environment_name = "rc"
-    stage                         = "PRODUCTION"
-  }
 }
 
 resource "aws_amplify_app" "design_system_docs_fr" {
@@ -68,14 +60,6 @@ resource "aws_amplify_app" "design_system_docs_fr" {
     target = "/fr/"
     status = "200"
   }
-
-  auto_branch_creation_config {
-    # Enable auto build for the created branch.
-    enable_auto_build             = true
-    enable_pull_request_preview   = true
-    pull_request_environment_name = "rc"
-    stage                         = "PRODUCTION"
-  }
 }
 
 
@@ -88,7 +72,8 @@ resource "aws_amplify_branch" "main_en" {
 
   display_name = "production"
 
-  enable_pull_request_preview = false
+  # We only need one preview environment since it contains both english and french content
+  enable_pull_request_preview = true
 }
 
 resource "aws_amplify_branch" "main_fr" {
@@ -100,6 +85,7 @@ resource "aws_amplify_branch" "main_fr" {
 
   display_name = "production"
 
+  # We only need one preview environment since it contains both english and french content
   enable_pull_request_preview = false
 }
 
