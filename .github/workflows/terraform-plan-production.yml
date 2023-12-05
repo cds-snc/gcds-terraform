@@ -29,7 +29,8 @@ jobs:
         include:
           - module: website
           - module: cdn
-          - module: route53          
+          - module: route53
+          - module: api 
 
     runs-on: ubuntu-latest
     steps:
