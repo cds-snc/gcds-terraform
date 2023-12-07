@@ -12,6 +12,7 @@ env:
   TERRAFORM_VERSION: 1.6.1
   TERRAGRUNT_VERSION: 0.52.1
   TF_VAR_gh_access_token: ${{ secrets.GH_ACCESS_TOKEN }}
+  TF_VAR_api_config: ${{ secrets.API_CONFIG }}
 
 permissions:
   id-token: write
