@@ -8,9 +8,6 @@ module "api" {
   timeout                = 120
   enable_lambda_insights = true
 
-  environment_variables = {
-  }
-
   policies = [
     data.aws_iam_policy_document.api_policies.json,
   ]
