@@ -23,7 +23,7 @@ dependency "api" {
   mock_outputs_allowed_terraform_commands = ["init", "fmt", "validate", "plan", "show"]
   mock_outputs_merge_strategy_with_state  = "shallow"
   mock_outputs = {
-    api_function_url = "https://api.design-system.com"
+    function_url = "https://api.design-system.com"
   }
 }
 
