@@ -28,10 +28,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - module: website
           - module: cdn
           - module: route53
-          - module: api 
+          - module: api
+          - module: website
 
     runs-on: ubuntu-latest
     steps:

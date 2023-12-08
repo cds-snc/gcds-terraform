@@ -43,13 +43,13 @@ jobs:
       - name: Apply CDN
         working-directory: terragrunt/env/production/cdn
         run: terragrunt apply --terragrunt-non-interactive -auto-approve
-        
-      - name: Apply website
-        working-directory: terragrunt/env/production/website
-        run: terragrunt apply --terragrunt-non-interactive -auto-approve
-      
+
       - name: Apply API
         working-directory: terragrunt/env/production/api
+        run: terragrunt apply --terragrunt-non-interactive -auto-approve
+
+      - name: Apply website
+        working-directory: terragrunt/env/production/website
         run: terragrunt apply --terragrunt-non-interactive -auto-approve
 
       - name: Slack message on failure
