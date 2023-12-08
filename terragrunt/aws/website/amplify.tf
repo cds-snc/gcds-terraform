@@ -28,6 +28,13 @@ resource "aws_amplify_app" "design_system_docs_en" {
     target = "/en/"
     status = "200"
   }
+
+  # Redirect for the API contact form submission
+  custom_rule {
+    source = "/api/submission"
+    target = "${var.api_function_url}submission"
+    status = "200"
+  }
 }
 
 resource "aws_amplify_app" "design_system_docs_fr" {
@@ -58,6 +65,13 @@ resource "aws_amplify_app" "design_system_docs_fr" {
   custom_rule {
     source = "/"
     target = "/fr/"
+    status = "200"
+  }
+
+  # Redirect for the API contact form submission
+  custom_rule {
+    source = "/api/submission"
+    target = "${var.api_function_url}submission"
     status = "200"
   }
 }
