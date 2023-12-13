@@ -29,13 +29,8 @@ resource "aws_route53_record" "cdn_NS" {
   zone_id = aws_route53_zone.website_en.zone_id
   name    = var.domain_cdn
 
-  type    = "NS"
+  type = "NS"
 
-  records = [
-    "ns-1114.awsdns-11.org",
-    "ns-830.awsdns-39.net",
-    "ns-2010.awsdns-59.co.uk",
-    "ns-111.awsdns-13.com"
-  ]
-  ttl = "300"
+  records = aws_route53_zone.content_delivery_network.name_servers
+  ttl     = "300"
 }
