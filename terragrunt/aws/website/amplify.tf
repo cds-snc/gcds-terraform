@@ -100,7 +100,7 @@ resource "aws_amplify_branch" "main_fr" {
   display_name = "production"
 
   # We only need one preview environment since it contains both english and french content
-  enable_pull_request_preview = false
+  enable_pull_request_preview = true
 }
 
 resource "aws_amplify_domain_association" "design_system_en" {
