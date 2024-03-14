@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_log_metric_filter" "gc_design_system_error" {
   name           = local.error_logged
-  pattern        = "?ERROR ?Exception"
+  pattern        = "?ERROR ?Error"
   log_group_name = local.api_cloudwatch_log_group
 
   metric_transformation {
