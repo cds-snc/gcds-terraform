@@ -12,7 +12,8 @@ module "api" {
     data.aws_iam_policy_document.api_policies.json,
   ]
 
-  billing_tag_value = var.billing_code
+  billing_tag_value          = var.billing_code
+  log_group_retention_period = 365
 }
 
 resource "aws_lambda_function_url" "api" {
