@@ -13,6 +13,7 @@ module "api" {
   ]
 
   billing_tag_value = var.billing_code
+  log_group_retention_period = 356
 }
 
 resource "aws_lambda_function_url" "api" {
