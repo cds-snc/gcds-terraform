@@ -25,6 +25,4 @@ resource "aws_amplify_branch" "main_fable_test" {
   stage = "PRODUCTION"
 
   display_name = "fable-test"
-
-  enable_pull_request_preview = true
 }
