@@ -8,11 +8,11 @@ resource "aws_amplify_app" "design_system_fable_test_app" {
 
   build_spec = file("${path.module}/build_spec/amplify.yml")
 
-  # 404 redirects
+  # The default rewrites and redirects for a single page app
   custom_rule {
     source = "/<*>"
-    target = "/404"
     status = "404"
+    target = "/index.html"
   }
 }
 
