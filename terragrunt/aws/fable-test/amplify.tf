@@ -11,7 +11,7 @@ resource "aws_amplify_app" "design_system_fable_test_app" {
   # The default rewrites and redirects for a single page app
   custom_rule {
     source = "/<*>"
-    status = "404"
+    status = "404-200"
     target = "/index.html"
   }
 }
