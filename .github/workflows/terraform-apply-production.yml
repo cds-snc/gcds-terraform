@@ -54,6 +54,10 @@ jobs:
         working-directory: terragrunt/env/production/website
         run: terragrunt apply --terragrunt-non-interactive -auto-approve
 
+      - name: Apply fable-test
+        working-directory: terragrunt/env/production/fable-test
+        run: terragrunt apply --terragrunt-non-interactive -auto-approve
+
       - name: Slack message on failure
         if: failure()
         run: |

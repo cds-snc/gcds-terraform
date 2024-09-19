@@ -34,6 +34,7 @@ jobs:
           - module: route53
           - module: api
           - module: website
+          - module: fable-test
 
     runs-on: ubuntu-latest
     steps:
