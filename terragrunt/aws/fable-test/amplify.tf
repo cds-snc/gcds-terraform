@@ -24,7 +24,7 @@ resource "aws_amplify_branch" "main_fable_test" {
   # Could be one of: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
   stage = "PRODUCTION"
 
-  display_name = "production"
+  display_name = "fable-test"
 
   enable_pull_request_preview = true
 }
