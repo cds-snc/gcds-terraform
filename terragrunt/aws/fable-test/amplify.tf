@@ -17,7 +17,7 @@ resource "aws_amplify_app" "design_system_fable_test_app" {
 }
 
 
-resource "aws_amplify_branch" "main" {
+resource "aws_amplify_branch" "main_fable_test" {
   app_id      = aws_amplify_app.design_system_fable_test_app.id
   branch_name = "main"
 
@@ -26,6 +26,5 @@ resource "aws_amplify_branch" "main" {
 
   display_name = "production"
 
-  # We only need one preview environment since it contains both english and french content
   enable_pull_request_preview = true
 }
