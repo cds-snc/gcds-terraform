@@ -1,6 +1,6 @@
 {
 	"name": "gcds-terraform",
-	"image": "mcr.microsoft.com/vscode/devcontainers/base:buster@sha256:6c7a6ce6e82d5ae33e2eee794a3a933a956083021ba7fccca705b9fb5f3c7dbf",
+	"image": "mcr.microsoft.com/vscode/devcontainers/base:buster@sha256:8b37c13a55fb3c959eb3b1a4617dea53d4a6b2e1e913acc543ce833b9bd21bc5",
 	"containerEnv": {
 		"SHELL": "/bin/zsh"
 	},
