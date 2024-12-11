@@ -1,11 +1,20 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: System
+metadata:
+  name: gc-design-system
+  title: GC Design System | Système de design GC
+  description: Build modern, accessible, human government services people can use. | Créez des services gouvernementaux modernes accessibles et humains destinés au public.
+spec:
+  owner: cds-snc/design-system 
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
 metadata:
   name: gcds-terraform
   description: GC Design System infrastructure code.
   labels:
     license: MIT
 spec:
-  type: website
-  lifecycle: experimental
-  owner: cds-snc
+  type: infrastructure
+  owner: cds-snc/design-system
+  system: gc-design-system
