@@ -35,6 +35,11 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
+  logging_config {
+    bucket = aws_s3_bucket.cloudfront_logs.bucket_domain_name
+    prefix = "cloudfront-logs/"
+  }
+
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate_validation.cdn_certificate_validation.certificate_arn
     minimum_protocol_version = "TLSv1.2_2021"
@@ -45,4 +50,36 @@ resource "aws_cloudfront_distribution" "cdn" {
     CostCentre = var.billing_code
     Terraform  = true
   }
+}
+
+# Bucket to store cloudfront logscheck "name" {
+resource "aws_s3_bucket" "cloudfront_logs" {
+  bucket = "design-system-cloudfront-logs-bucket"
+}
+
+# Bucket policy to allow CloudFront to write logs
+resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
+  bucket = aws_s3_bucket.cloudfront_logs.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        },
+        Action   = "s3:PutObject",
+        Resource = "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.id}/*",
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.cdn.arn
+          }
+        }
+      }
+    ]
+  })
+
+  # Add explicit dependency to ensure CloudFront exists before updating the policy
+  depends_on = [aws_cloudfront_distribution.cdn]
 }
