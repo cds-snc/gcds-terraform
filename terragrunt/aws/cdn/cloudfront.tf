@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   logging_config {
-    bucket = aws_s3_bucket.cloudfront_logs.bucket_domain_name
+    bucket = module.cloudfront_logs.s3_bucket_domain_name
     prefix = "cloudfront-logs/"
   }
 
@@ -53,13 +53,16 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 # Bucket to store cloudfront logscheck "name" {
-resource "aws_s3_bucket" "cloudfront_logs" {
-  bucket = "design-system-cloudfront-logs-bucket"
+module "cloudfront_logs" {
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.4.4"
+  bucket_name       = "${var.product_name}-${var.env}-cdn-cloudfront-logs"
+  billing_tag_value = var.billing_code
+
 }
 
 # Bucket policy to allow CloudFront to write logs
 resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
-  bucket = aws_s3_bucket.cloudfront_logs.id
+  bucket = module.cloudfront_logs.s3_bucket_id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -70,7 +73,7 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
           Service = "cloudfront.amazonaws.com"
         },
         Action   = "s3:PutObject",
-        Resource = "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.id}/*",
+        Resource = "arn:aws:s3:::${module.cloudfront_logs.s3_bucket_id}/*",
         Condition = {
           StringEquals = {
             "AWS:SourceArn" = aws_cloudfront_distribution.cdn.arn
