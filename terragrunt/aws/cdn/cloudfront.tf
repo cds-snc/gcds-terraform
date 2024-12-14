@@ -83,6 +83,4 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
     ]
   })
 
-  # Add explicit dependency to ensure CloudFront exists before updating the policy
-  depends_on = [aws_cloudfront_distribution.cdn]
 }
