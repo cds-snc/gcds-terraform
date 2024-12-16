@@ -35,6 +35,11 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
+  logging_config {
+    bucket = module.cloudfront_logs.s3_bucket_domain_name
+    prefix = "cloudfront-logs/"
+  }
+
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate_validation.cdn_certificate_validation.certificate_arn
     minimum_protocol_version = "TLSv1.2_2021"
@@ -45,4 +50,37 @@ resource "aws_cloudfront_distribution" "cdn" {
     CostCentre = var.billing_code
     Terraform  = true
   }
+}
+
+# Bucket to store cloudfront logscheck "name" {
+module "cloudfront_logs" {
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.4.4"
+  bucket_name       = "${var.product_name}-${var.env}-cdn-logs"
+  billing_tag_value = var.billing_code
+
+}
+
+# Bucket policy to allow CloudFront to write logs
+resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
+  bucket = module.cloudfront_logs.s3_bucket_id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "cloudfront.amazonaws.com"
+        },
+        Action   = "s3:PutObject",
+        Resource = "arn:aws:s3:::${module.cloudfront_logs.s3_bucket_id}/*",
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.cdn.arn
+          }
+        }
+      }
+    ]
+  })
+
 }
