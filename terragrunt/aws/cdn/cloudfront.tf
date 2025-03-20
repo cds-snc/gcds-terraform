@@ -54,7 +54,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 
 # Bucket to store cloudfront logscheck "name" {
 module "cloudfront_logs" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.4.4"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.6.8"
   bucket_name       = "${var.product_name}-${var.env}-cdn-logs"
   billing_tag_value = var.billing_code
 
