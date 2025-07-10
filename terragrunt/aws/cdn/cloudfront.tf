@@ -84,3 +84,13 @@ resource "aws_s3_bucket_policy" "cloudfront_logs_policy" {
   })
 
 }
+
+# Set the bucket ownership controls of the log bucket to ensure that CloudFront can write logs
+resource "aws_s3_bucket_ownership_controls" "cloudfront_logs_ownership_controls" {
+  bucket = module.cloudfront_logs.s3_bucket_id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+  depends_on = [module.cloudfront_logs]
+}
