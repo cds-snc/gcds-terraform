@@ -37,7 +37,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   logging_config {
     bucket = module.cloudfront_logs.s3_bucket_domain_name
-    prefix = "cloudfront-logs/"
+    prefix = "platform/gc-design-system/cloudfront-logs/"
   }
 
   viewer_certificate {
