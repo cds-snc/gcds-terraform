@@ -17,7 +17,8 @@ dependency "route53" {
 }
 
 inputs = {
-  hosted_zone_id = dependency.route53.outputs.hosted_zone_id_cdn
+  hosted_zone_id                       = dependency.route53.outputs.hosted_zone_id_cdn
+  platform_data_lake_raw_s3_bucket_arn = "arn:aws:s3:::cds-data-lake-raw-production"
 }
 
 include {
