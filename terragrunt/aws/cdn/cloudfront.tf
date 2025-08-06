@@ -52,12 +52,25 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 }
 
-# Bucket to store cloudfront logscheck "name" {
+# Bucket to store cloudfront logs
 module "cloudfront_logs" {
   source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.4.4"
   bucket_name       = "${var.product_name}-${var.env}-cdn-logs"
   billing_tag_value = var.billing_code
+}
 
+resource "aws_s3_bucket_replication_configuration" "s3_replicate_data_lake" {
+  role   = aws_iam_role.s3_replicate_data_lake.arn
+  bucket = module.cloudfront_logs.s3_bucket_id
+
+  rule {
+    id     = "send-to-platform-data-lake"
+    status = var.env == "production" ? "Enabled" : "Disabled"
+
+    destination {
+      bucket = var.platform_data_lake_raw_s3_bucket_arn
+    }
+  }
 }
 
 # Bucket policy to allow CloudFront to write logs
