@@ -8,20 +8,6 @@ module "cdn_origin" {
   }
 }
 
-resource "aws_s3_bucket_replication_configuration" "s3_replicate_data_lake" {
-  role   = aws_iam_role.s3_replicate_data_lake.arn
-  bucket = module.cdn_origin.s3_bucket_id
-
-  rule {
-    id     = "send-to-platform-data-lake"
-    status = var.env == "production" ? "Enabled" : "Disabled"
-
-    destination {
-      bucket = var.platform_data_lake_raw_s3_bucket_arn
-    }
-  }
-}
-
 resource "aws_s3_bucket_policy" "cdn_origin" {
   bucket = module.cdn_origin.s3_bucket_id
   policy = data.aws_iam_policy_document.cdn_origin_combined.json
