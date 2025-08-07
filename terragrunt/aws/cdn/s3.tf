@@ -135,7 +135,7 @@ data "aws_iam_policy_document" "s3_replicate_data_lake" {
       "s3:ListBucket"
     ]
     resources = [
-      module.cdn_origin.s3_bucket_arn
+      module.cloudfront_logs.s3_bucket_arn
     ]
   }
   statement {
@@ -145,7 +145,7 @@ data "aws_iam_policy_document" "s3_replicate_data_lake" {
       "s3:GetObjectVersionAcl"
     ]
     resources = [
-      "${module.cdn_origin.s3_bucket_arn}/*"
+      "${module.cloudfront_logs.s3_bucket_arn}/*"
     ]
   }
   statement {
