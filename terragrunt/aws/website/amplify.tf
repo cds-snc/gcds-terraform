@@ -29,6 +29,13 @@ resource "aws_amplify_app" "design_system_docs_en" {
     status = "200"
   }
 
+  # Redirect for the get started pages
+  custom_rule {
+    source = "/en/get-started/<*>"
+    target = "/en/start-to-use/<*>"
+    status = "301"
+  }
+
   # Redirect for the API contact form submission
   custom_rule {
     source = "/api/submission"
