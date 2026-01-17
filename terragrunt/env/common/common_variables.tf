@@ -8,18 +8,18 @@ variable "cbs_satellite_bucket_name" {
   type        = string
 }
 
-variable "domain_cdn" {
-  description = "(Required) Domain name of the product's Content Delivery Network"
+variable "alpha_domain_cdn" {
+  description = "(Required) (Alpha) Domain name of the product's Content Delivery Network"
   type        = string
 }
 
-variable "domain_website_en" {
-  description = "(Required) Domain name of the product's English website"
+variable "alpha_domain_website_en" {
+  description = "(Required) (Alpha) Domain name of the product's English website"
   type        = string
 }
 
-variable "domain_website_fr" {
-  description = "(Required) Domain name of the product's French website"
+variable "alpha_domain_website_fr" {
+  description = "(Required) (Alpha) Domain name of the product's French website"
   type        = string
 }
 
