@@ -1,8 +1,8 @@
 resource "aws_acm_certificate" "cdn" {
   provider = aws.us-east-1
 
-  domain_name               = var.alpha_domain_cdn
-  subject_alternative_names = ["*.${var.alpha_domain_cdn}"]
+  domain_name               = var.domain_cdn
+  subject_alternative_names = ["*.${var.domain_cdn}"]
   validation_method         = "DNS"
 
   tags = {

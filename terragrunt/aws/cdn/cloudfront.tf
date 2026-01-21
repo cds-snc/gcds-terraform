@@ -4,7 +4,7 @@ resource "aws_cloudfront_origin_access_identity" "cdn" {
 
 resource "aws_cloudfront_distribution" "cdn" {
   enabled     = true
-  aliases     = [var.alpha_domain_cdn]
+  aliases     = [var.domain_cdn]
   price_class = "PriceClass_All"
 
   origin {
