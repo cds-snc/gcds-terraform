@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "content_delivery_network" {
-  name = var.alpha_domain_cdn
+  name = var.domain_cdn
 
   tags = {
     CostCentre = var.billing_code
@@ -8,7 +8,7 @@ resource "aws_route53_zone" "content_delivery_network" {
 }
 
 resource "aws_route53_zone" "website_en" {
-  name = var.alpha_domain_website_en
+  name = var.domain_website_en
 
   tags = {
     CostCentre = var.billing_code
@@ -17,7 +17,7 @@ resource "aws_route53_zone" "website_en" {
 }
 
 resource "aws_route53_zone" "website_fr" {
-  name = var.alpha_domain_website_fr
+  name = var.domain_website_fr
 
   tags = {
     CostCentre = var.billing_code
@@ -27,7 +27,7 @@ resource "aws_route53_zone" "website_fr" {
 
 resource "aws_route53_record" "cdn_NS" {
   zone_id = aws_route53_zone.website_en.zone_id
-  name    = var.alpha_domain_cdn
+  name    = var.domain_cdn
 
   type = "NS"
 
