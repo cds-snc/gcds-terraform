@@ -6,3 +6,12 @@ resource "aws_route53_zone" "website_fr" {
     Terraform  = true
   }
 }
+
+resource "aws_route53_zone" "ca_website_fr" {
+  name = var.alpha_domain_ca_website_fr
+
+  tags = {
+    CostCentre = var.billing_code
+    Terraform  = true
+  }
+}
