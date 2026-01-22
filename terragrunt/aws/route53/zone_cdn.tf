@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "content_delivery_network" {
-  name = var.domain_cdn
+  name = var.alpha_domain_cdn
 
   tags = {
     CostCentre = var.billing_code
@@ -9,7 +9,7 @@ resource "aws_route53_zone" "content_delivery_network" {
 
 resource "aws_route53_record" "cdn_NS" {
   zone_id = aws_route53_zone.website_en.zone_id
-  name    = var.domain_cdn
+  name    = var.alpha_domain_cdn
 
   type = "NS"
 
