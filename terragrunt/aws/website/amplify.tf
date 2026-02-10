@@ -110,6 +110,7 @@ resource "aws_amplify_branch" "main_fr" {
   enable_pull_request_preview = true
 }
 
+# Custom domain (design-system.alpha.canada.ca) for the english amplify app
 resource "aws_amplify_domain_association" "design_system_en" {
   app_id      = aws_amplify_app.design_system_docs_en.id
   domain_name = var.alpha_domain_website_en
@@ -122,9 +123,36 @@ resource "aws_amplify_domain_association" "design_system_en" {
   }
 }
 
+# Custom domain (systeme-design.alpha.canada.ca) for the french amplify app
 resource "aws_amplify_domain_association" "design_system_fr" {
   app_id      = aws_amplify_app.design_system_docs_fr.id
   domain_name = var.alpha_domain_website_fr
+
+  wait_for_verification = false
+
+  sub_domain {
+    branch_name = aws_amplify_branch.main_fr.branch_name
+    prefix      = ""
+  }
+}
+
+# Custom domain (design-system.canada.ca) for the english amplify app
+resource "aws_amplify_domain_association" "gcds_en" {
+  app_id      = aws_amplify_app.design_system_docs_en.id
+  domain_name = var.ca_domain_website_en
+
+  wait_for_verification = false
+
+  sub_domain {
+    branch_name = aws_amplify_branch.main_en.branch_name
+    prefix      = ""
+  }
+}
+
+# Custom domain (systeme-design.canada.ca) for the french amplify app
+resource "aws_amplify_domain_association" "gcds_fr" {
+  app_id      = aws_amplify_app.design_system_docs_fr.id
+  domain_name = var.ca_domain_website_fr
 
   wait_for_verification = false
 
