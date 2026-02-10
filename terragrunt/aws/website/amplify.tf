@@ -137,7 +137,7 @@ resource "aws_amplify_domain_association" "design_system_fr" {
 }
 
 # Custom domain (design-system.canada.ca) for the english amplify app
-resource "aws_amplify_domain_association" "design_system_en" {
+resource "aws_amplify_domain_association" "gcds_en" {
   app_id      = aws_amplify_app.design_system_docs_en.id
   domain_name = var.domain_website_en
 
@@ -150,7 +150,7 @@ resource "aws_amplify_domain_association" "design_system_en" {
 }
 
 # Custom domain (systeme-design.canada.ca) for the french amplify app
-resource "aws_amplify_domain_association" "design_system_fr" {
+resource "aws_amplify_domain_association" "gcds_fr" {
   app_id      = aws_amplify_app.design_system_docs_fr.id
   domain_name = var.domain_website_fr
 
