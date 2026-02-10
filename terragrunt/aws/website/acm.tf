@@ -1,11 +1,4 @@
-# ACM certificate for alpha English website domain (used with CloudFront/Amplify custom domain)
-
-# Note: ACM for CloudFront must be in us-east-1
-provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
-}
-
+# ACM certificate for alpha website domains
 resource "aws_acm_certificate" "website_alpha_en" {
   provider = aws.us-east-1
 
