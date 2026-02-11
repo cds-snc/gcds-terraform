@@ -18,7 +18,8 @@ inputs = {
   region                    = "ca-central-1"
   billing_code              = "${local.vars.inputs.cost_center_code}"
   cbs_satellite_bucket_name = "cbs-satellite-${local.vars.inputs.account_id}"
-  alpha_domain_redirect_en  = "${local.vars.inputs.alpha_domain_redirect_en}"
+  alpha_domain_redirect_en  = "${local.vars.inputs.alpha_domain_redirect_en}" # S3 bucket name for redirects EN
+  alpha_domain_redirect_fr  = "${local.vars.inputs.alpha_domain_redirect_fr}" # S3 bucket name for redirects FR
 }
 
 generate "provider" {
