@@ -18,7 +18,7 @@ resource "aws_amplify_app" "design_system_docs_en" {
   # Redirect for the french website
   custom_rule {
     source = "/fr/<*>"
-    target = "https://${var.alpha_domain_website_fr}/fr/<*>"
+    target = "https://${var.ca_domain_website_fr}/fr/<*>"
     status = "301"
   }
 
@@ -64,7 +64,7 @@ resource "aws_amplify_app" "design_system_docs_fr" {
   # Redirect for english website
   custom_rule {
     source = "/en/<*>"
-    target = "https://${var.alpha_domain_website_en}/en/<*>"
+    target = "https://${var.ca_domain_website_en}/en/<*>"
     status = "301"
   }
 
