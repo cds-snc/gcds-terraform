@@ -3,7 +3,7 @@ terraform {
 }
 
 dependencies {
-  paths = ["../route53"]
+  paths = ["../route53", "../cdn"]
 }
 
 dependency "route53" {
