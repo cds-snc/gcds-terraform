@@ -20,6 +20,7 @@ dependency "route53" {
 inputs = {
   hosted_zone_id_en = dependency.route53.outputs.hosted_zone_id_website_en
   hosted_zone_id_fr = dependency.route53.outputs.hosted_zone_id_website_fr
+  cdn_cloudfront_log_bucket = dependency.cdn.outputs.cdn_cloudfront_log_bucket
 }
 
 include {
