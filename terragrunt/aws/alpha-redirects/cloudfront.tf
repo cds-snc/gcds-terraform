@@ -93,7 +93,7 @@ resource "aws_cloudfront_distribution" "alpha_redirect_fr" {
   }
 
   logging_config {
-    bucket = module.cloudfront_logs.s3_bucket_domain_name
+    bucket = var.cdn_cloudfront_log_bucket
     prefix = "platform/gc-design-system/alpha-redirect-logs/"
   }
 
