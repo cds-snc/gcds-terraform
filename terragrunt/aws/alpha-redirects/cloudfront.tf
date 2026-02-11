@@ -15,30 +15,32 @@ resource "aws_cloudfront_distribution" "alpha_redirect_en" {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+      origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
 
   default_cache_behavior {
     target_origin_id       = local.s3_alpha_en_origin_id
     viewer_protocol_policy = "redirect-to-https"
+    compress = true
 
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-    compress = true
+    cache_policy_id            = local.cloudfront_cache_policy_optimized
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_cors_s3origin
+    response_headers_policy_id = local.cloudfront_response_headers_policy_cors_preflight
   }
 
   restrictions {
     geo_restriction {
       restriction_type = "none"
     }
+  }
+
+  logging_config {
+    bucket = module.alpha_redirect_bucket_fr.s3_bucket_domain_name
+    prefix = "platform/gc-design-system/alpha-redirect-logs/"
   }
 
   viewer_certificate {
@@ -51,7 +53,7 @@ resource "aws_cloudfront_distribution" "alpha_redirect_en" {
 }
 
 # CloudFront distribution to front the S3 website redirect and provide HTTPS using the existing ACM cert
-resource "aws_cloudfront_distribution" "alpha_redirect_en" {
+resource "aws_cloudfront_distribution" "alpha_redirect_fr" {
   enabled         = true
   is_ipv6_enabled = true
   comment         = "Alpha FR domain redirect to ${var.ca_domain_website_fr}"
@@ -67,30 +69,32 @@ resource "aws_cloudfront_distribution" "alpha_redirect_en" {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+      origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
 
   default_cache_behavior {
     target_origin_id       = local.s3_alpha_fr_origin_id
     viewer_protocol_policy = "redirect-to-https"
+    compress = true
 
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-    compress = true
+    cache_policy_id            = local.cloudfront_cache_policy_optimized
+    origin_request_policy_id   = local.cloudfront_origin_request_policy_cors_s3origin
+    response_headers_policy_id = local.cloudfront_response_headers_policy_cors_preflight
   }
 
   restrictions {
     geo_restriction {
       restriction_type = "none"
     }
+  }
+
+  logging_config {
+    bucket = module.alpha_redirect_bucket_fr.s3_bucket_domain_name
+    prefix = "platform/gc-design-system/alpha-redirect-logs/"
   }
 
   viewer_certificate {
