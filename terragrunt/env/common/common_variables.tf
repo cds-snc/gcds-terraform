@@ -79,3 +79,13 @@ variable "billing_code" {
   description = "The billing code to tag our resources with"
   type        = string
 }
+
+variable "alpha_domain_redirect_en" {
+  description = "S3 bucket name used for redirecting alpha EN domain to CA EN domain"
+  type        = string
+}
+
+variable "alpha_domain_redirect_fr" {
+  description = "S3 bucket name used for redirecting alpha FR domain to CA FR domain"
+  type        = string
+}
