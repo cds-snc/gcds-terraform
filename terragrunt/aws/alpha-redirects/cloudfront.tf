@@ -60,7 +60,7 @@ resource "aws_cloudfront_distribution" "alpha_fr_redirect" {
   price_class = "PriceClass_All"
 
   origin {
-    domain_name = aws_s3_bucket_website_configuration.alpha_fr_redirect.website_endpoint
+    domain_name = aws_s3_bucket_website_configuration.alpha_redirect_fr.website_endpoint
     origin_id   = local.s3_alpha_fr_origin_id
 
     custom_origin_config {

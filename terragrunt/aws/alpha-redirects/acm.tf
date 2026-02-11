@@ -78,5 +78,5 @@ resource "aws_acm_certificate_validation" "website_alpha_validation_en" {
 resource "aws_acm_certificate_validation" "website_alpha_validation_fr" {
   provider                = aws.us-east-1
   certificate_arn         = aws_acm_certificate.website_alpha_fr.arn
-  validation_record_fqdns = [for record in aws_route53_record.website_alpha_fr_dns_validation_fr : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.website_alpha_dns_validation_fr : record.fqdn]
 }
