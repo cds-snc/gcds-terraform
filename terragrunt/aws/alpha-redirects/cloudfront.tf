@@ -22,7 +22,7 @@ resource "aws_cloudfront_distribution" "alpha_redirect_en" {
   default_cache_behavior {
     target_origin_id       = local.s3_alpha_en_origin_id
     viewer_protocol_policy = "redirect-to-https"
-    compress = true
+    compress               = true
 
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
@@ -76,7 +76,7 @@ resource "aws_cloudfront_distribution" "alpha_redirect_fr" {
   default_cache_behavior {
     target_origin_id       = local.s3_alpha_fr_origin_id
     viewer_protocol_policy = "redirect-to-https"
-    compress = true
+    compress               = true
 
     allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]

@@ -5,6 +5,6 @@ locals {
   cloudfront_origin_request_policy_cors_s3origin = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf"
   # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html#managed-response-headers-policies-cors-preflight
   cloudfront_response_headers_policy_cors_preflight = "5cc3b908-e619-4b99-88e5-2cf7f45965bd"
-  s3_alpha_en_origin_id = "s3-${var.product_name}-alpha-domain-redirect-en-${var.env}"
-  s3_alpha_fr_origin_id = "s3-${var.product_name}-alpha-domain-redirect-fr-${var.env}"
+  s3_alpha_en_origin_id                             = "s3-${var.product_name}-alpha-domain-redirect-en-${var.env}"
+  s3_alpha_fr_origin_id                             = "s3-${var.product_name}-alpha-domain-redirect-fr-${var.env}"
 }
