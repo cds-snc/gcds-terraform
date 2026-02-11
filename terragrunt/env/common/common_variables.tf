@@ -88,6 +88,6 @@ variable "alpha_domain_redirect_en" {
 
 variable "alpha_domain_redirect_fr" {
   description = "S3 bucket name used for redirecting alpha FR domain to CA FR domain"
-type        = string
-default     = ""
+  type        = string
+  default     = ""
 }
