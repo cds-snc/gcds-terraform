@@ -85,3 +85,9 @@ variable "alpha_domain_redirect_en" {
   type        = string
   default     = ""
 }
+
+variable "alpha_domain_redirect_fr" {
+  description = "S3 bucket name used for redirecting alpha FR domain to CA EN domain"
+  type        = string
+  default     = ""
+}
