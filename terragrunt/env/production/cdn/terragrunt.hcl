@@ -13,11 +13,13 @@ dependency "route53" {
   mock_outputs_merge_strategy_with_state  = "shallow"
   mock_outputs = {
     hosted_zone_id_cdn = "Z001234567890ABCDEFGHIJ"
+    ca_hosted_zone_id = "Z06964963GJUBE67X0PGM"
   }
 }
 
 inputs = {
   hosted_zone_id                       = dependency.route53.outputs.hosted_zone_id_cdn
+  ca_hosted_zone_id                    = dependency.route53.outputs.hosted_zone_id_ca_cdn
   platform_data_lake_raw_s3_bucket_arn = "arn:aws:s3:::cds-data-lake-raw-production"
 }
 
