@@ -11,4 +11,6 @@ inputs = {
   ca_domain_cdn           = "cdn.design-system.canada.ca"
   ca_domain_website_en    = "design-system.canada.ca"
   ca_domain_website_fr    = "systeme-design.canada.ca"
+  alpha_domain_redirect_en = "design-system-alpha-redirect-en"
+  alpha_domain_redirect_fr = "design-system-alpha-redirect-fr"
 }
