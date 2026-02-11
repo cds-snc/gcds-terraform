@@ -17,6 +17,16 @@ dependency "route53" {
   }
 }
 
+dependency "cdn" {
+  config_path = "../cdn"
+
+  mock_outputs_allowed_terraform_commands = ["init", "fmt", "validate", "plan", "show"]
+  mock_outputs_merge_strategy_with_state  = "shallow"
+  mock_outputs = {
+    cdn_cloudfront_log_bucket = "cdn-cloudfront-logs-production"
+  }
+}
+
 inputs = {
   hosted_zone_id_en = dependency.route53.outputs.hosted_zone_id_website_en
   hosted_zone_id_fr = dependency.route53.outputs.hosted_zone_id_website_fr
