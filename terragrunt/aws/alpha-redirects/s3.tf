@@ -23,6 +23,14 @@ resource "aws_s3_bucket_website_configuration" "alpha_redirect_en" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "alpha_redirect_ownership_en" {
+  bucket = module.alpha_redirect_bucket_en.s3_bucket_id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 # Configure S3 static website hosting to redirect all requests to the CA FR domain (HTTPS)
 resource "aws_s3_bucket_website_configuration" "alpha_redirect_fr" {
   bucket = module.alpha_redirect_bucket_fr.s3_bucket_id
@@ -30,5 +38,14 @@ resource "aws_s3_bucket_website_configuration" "alpha_redirect_fr" {
   redirect_all_requests_to {
     host_name = var.ca_domain_website_fr
     protocol  = "https"
+  }
+}
+
+
+resource "aws_s3_bucket_ownership_controls" "alpha_redirect_ownership_fr" {
+  bucket = module.alpha_redirect_bucket_fr.s3_bucket_id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
 }
