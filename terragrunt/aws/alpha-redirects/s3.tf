@@ -15,7 +15,7 @@ module "alpha_redirect_bucket_fr" {
 
 # Configure S3 static website hosting to redirect all requests to the CA EN domain (HTTPS)
 resource "aws_s3_bucket_website_configuration" "alpha_redirect_en" {
-  bucket = module.alpha_en_redirect_bucket.s3_bucket_id
+  bucket = module.alpha_redirect_bucket_en.s3_bucket_id
 
   redirect_all_requests_to {
     host_name = var.ca_domain_website_en
@@ -25,7 +25,7 @@ resource "aws_s3_bucket_website_configuration" "alpha_redirect_en" {
 
 # Configure S3 static website hosting to redirect all requests to the CA FR domain (HTTPS)
 resource "aws_s3_bucket_website_configuration" "alpha_redirect_fr" {
-  bucket = module.alpha_fr_redirect_bucket.s3_bucket_id
+  bucket = module.alpha_redirect_bucket_fr.s3_bucket_id
 
   redirect_all_requests_to {
     host_name = var.ca_domain_website_fr
