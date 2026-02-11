@@ -1,5 +1,5 @@
 # CloudFront distribution to front the S3 website redirect and provide HTTPS using the existing ACM cert
-resource "aws_cloudfront_distribution" "alpha_en_redirect" {
+resource "aws_cloudfront_distribution" "alpha_redirect_en" {
   enabled         = true
   is_ipv6_enabled = true
   comment         = "Alpha EN domain redirect to ${var.ca_domain_website_en}"
@@ -51,7 +51,7 @@ resource "aws_cloudfront_distribution" "alpha_en_redirect" {
 }
 
 # CloudFront distribution to front the S3 website redirect and provide HTTPS using the existing ACM cert
-resource "aws_cloudfront_distribution" "alpha_fr_redirect" {
+resource "aws_cloudfront_distribution" "alpha_redirect_en" {
   enabled         = true
   is_ipv6_enabled = true
   comment         = "Alpha FR domain redirect to ${var.ca_domain_website_fr}"
