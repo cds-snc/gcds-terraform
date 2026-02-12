@@ -1,5 +1,4 @@
-// Route53 record: point the alpha EN apex domain to the CloudFront distribution (Alias A)
-// CloudFront hosted zone ID can be sourced from the distribution resource
+// Route53 record: point the alpha FR A domain to the CloudFront distribution (Alias A)
 resource "aws_route53_record" "alpha_fr_redirect_A" {
   zone_id = var.hosted_zone_id_fr
   name    = var.alpha_domain_website_fr
