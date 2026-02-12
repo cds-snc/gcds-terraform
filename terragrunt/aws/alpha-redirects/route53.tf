@@ -13,7 +13,6 @@ resource "aws_route53_record" "alpha_en_redirect_A" {
   }
 }
 
-
 // Route53 record: point the alpha FR A domain to the CloudFront distribution (Alias A)
 resource "aws_route53_record" "alpha_fr_redirect_A" {
   zone_id = var.hosted_zone_id_fr
