@@ -1,15 +1,14 @@
-# Route53 record: point the alpha EN apex domain to the CloudFront distribution (Alias A)
-# CloudFront hosted zone ID is a global constant: Z2FDTNDATAQYW2
-# resource "aws_route53_record" "alpha_en_redirect_apex" {
-#   zone_id = var.hosted_zone_id_en
-#   name    = var.alpha_domain_website_en
-#   type    = "A"
-#
-#   allow_overwrite = true
-#
-#   alias {
-#     name                   = aws_cloudfront_distribution.alpha_en_redirect.domain_name
-#     zone_id                = "Z2FDTNDATAQYW2"
-#     evaluate_target_health = false
-#   }
-# }
+// Route53 record: point the alpha FR A domain to the CloudFront distribution (Alias A)
+resource "aws_route53_record" "alpha_fr_redirect_A" {
+  zone_id = var.hosted_zone_id_fr
+  name    = var.alpha_domain_website_fr
+  type    = "A"
+
+  allow_overwrite = true
+
+  alias {
+    name                   = aws_cloudfront_distribution.alpha_redirect_fr.domain_name
+    zone_id                = aws_cloudfront_distribution.alpha_redirect_fr.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
