@@ -95,7 +95,7 @@ resource "aws_cloudfront_distribution" "ca_cdn" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate_validation.cdn_certificate_validation.certificate_arn
+    acm_certificate_arn      = aws_acm_certificate_validation.ca_cdn_certificate_validation.certificate_arn
     minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method       = "sni-only"
   }
