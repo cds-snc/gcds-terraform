@@ -53,7 +53,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 resource "aws_cloudfront_origin_access_identity" "ca_cdn" {
-  comment = "CloudFront CDN for CA ${var.product_name}-${var.env}"
+  comment = "CDN for ${var.ca_domain_cdn}-${var.env}"
 }
 
 resource "aws_cloudfront_distribution" "ca_cdn" {
