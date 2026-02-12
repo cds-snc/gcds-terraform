@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "cloudfront_get_object" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.cdn.iam_arn]
+      identifiers = [aws_cloudfront_origin_access_identity.cdn.iam_arn, aws_cloudfront_origin_access_identity.ca_cdn.iam_arn]
     }
     actions = [
       "s3:GetObject",
