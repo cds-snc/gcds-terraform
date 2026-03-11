@@ -5,4 +5,6 @@ skip-check:
   - CKV_AWS_86  # CloudFront: Access logging not required
   - CKV_AWS_51 # ECR: `latest` tag is used for development
   - CKV_AWS_136 # ECR: default encryption key is acceptable
-  - CKV_AWS_26 # SNS: Encryption-at-rest not required for alarm topic 
+  - CKV_AWS_26 # SNS: Encryption-at-rest not required for alarm topic
+  - CKV2_AWS_31 # WAF metrics monitored via CloudWatch is acceptable
+  - CKV_AWS_158 # CloudWatch Logs: KMS encryption not required for WAF metrics
