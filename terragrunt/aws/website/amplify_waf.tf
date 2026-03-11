@@ -529,3 +529,37 @@ resource "aws_wafv2_web_acl_association" "amplify_fr" {
   resource_arn = aws_amplify_app.design_system_docs_fr.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_fr.arn
 }
+
+resource "aws_cloudwatch_log_group" "waf_amplify_en" {
+  provider          = aws.us-east-1
+  name              = "aws-waf-logs-${var.product_name}-amplify-en-${var.env}"
+  retention_in_days = 90
+
+  tags = {
+    CostCentre = var.billing_code
+    Terraform  = true
+  }
+}
+
+resource "aws_cloudwatch_log_group" "waf_amplify_fr" {
+  provider          = aws.us-east-1
+  name              = "aws-waf-logs-${var.product_name}-amplify-fr-${var.env}"
+  retention_in_days = 90
+
+  tags = {
+    CostCentre = var.billing_code
+    Terraform  = true
+  }
+}
+
+resource "aws_wafv2_web_acl_logging_configuration" "amplify_en" {
+  provider                = aws.us-east-1
+  resource_arn            = aws_wafv2_web_acl.amplify_en.arn
+  log_destination_configs = [aws_cloudwatch_log_group.waf_amplify_en.arn]
+}
+
+resource "aws_wafv2_web_acl_logging_configuration" "amplify_fr" {
+  provider                = aws.us-east-1
+  resource_arn            = aws_wafv2_web_acl.amplify_fr.arn
+  log_destination_configs = [aws_cloudwatch_log_group.waf_amplify_fr.arn]
+}
