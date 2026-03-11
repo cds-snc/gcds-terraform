@@ -31,10 +31,33 @@ resource "aws_wafv2_web_acl" "amplify_en" {
     }
   }
 
+  # AWS managed bad input protections (includes Log4j-style payload detection)
+  rule {
+    name     = "AWSManagedRulesKnownBadInputsRuleSet"
+    priority = 1
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.product_name}-amplify-en-known-bad-inputs"
+      sampled_requests_enabled   = true
+    }
+  }
+
   # Rate Limiting Rule (only POST to /api/submission/)
   rule {
     name     = "RateLimitRule"
-    priority = 1
+    priority = 2
 
     action {
       block {}
@@ -87,7 +110,7 @@ resource "aws_wafv2_web_acl" "amplify_en" {
   # Block large requests to prevent abuse and DoS attacks
   rule {
     name     = "BlockLargeRequests"
-    priority = 2
+    priority = 3
 
     action {
       block {}
@@ -119,7 +142,7 @@ resource "aws_wafv2_web_acl" "amplify_en" {
   # Only allow POST on /api/submission/
   rule {
     name     = "SubmissionMethodRestriction"
-    priority = 3
+    priority = 4
 
     action {
       block {}
@@ -170,7 +193,7 @@ resource "aws_wafv2_web_acl" "amplify_en" {
   # API Endpoint Protection - Whitelist known good paths (/api/submission/) and block everything else under /api/
   rule {
     name     = "APIEndpointProtection"
-    priority = 4
+    priority = 5
 
     action {
       block {
@@ -267,10 +290,33 @@ resource "aws_wafv2_web_acl" "amplify_fr" {
     }
   }
 
+  # AWS managed bad input protections (includes Log4j-style payload detection)
+  rule {
+    name     = "AWSManagedRulesKnownBadInputsRuleSet"
+    priority = 1
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${var.product_name}-amplify-fr-known-bad-inputs"
+      sampled_requests_enabled   = true
+    }
+  }
+
   # Rate Limiting Rule (only POST to /api/submission/)
   rule {
     name     = "RateLimitRule"
-    priority = 1
+    priority = 2
 
     action {
       block {}
@@ -323,7 +369,7 @@ resource "aws_wafv2_web_acl" "amplify_fr" {
   # Block large requests to prevent abuse and DoS attacks
   rule {
     name     = "BlockLargeRequests"
-    priority = 2
+    priority = 3
 
     action {
       block {}
@@ -355,7 +401,7 @@ resource "aws_wafv2_web_acl" "amplify_fr" {
   # Only allow POST on /api/submission/
   rule {
     name     = "SubmissionMethodRestriction"
-    priority = 3
+    priority = 4
 
     action {
       block {}
@@ -406,7 +452,7 @@ resource "aws_wafv2_web_acl" "amplify_fr" {
   # API Endpoint Protection - Whitelist known good paths (/api/submission/) and block everything else under /api/
   rule {
     name     = "APIEndpointProtection"
-    priority = 4
+    priority = 5
 
     action {
       block {
