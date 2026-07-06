@@ -100,13 +100,15 @@ resource "aws_s3_bucket_ownership_controls" "cloudfront_logs_ownership_controls"
 # Replicate the data to the Platform Data Lake
 #
 resource "aws_iam_role" "s3_replicate_data_lake" {
+  provider           = aws.core_services
   name               = "DesignSystemS3ReplicatePlatformDataLake"
   assume_role_policy = data.aws_iam_policy_document.s3_replicate_assume.json
 }
 
 resource "aws_iam_policy" "s3_replicate_data_lake" {
-  name   = "DesignSystemS3ReplicatePlatformDataLake"
-  policy = data.aws_iam_policy_document.s3_replicate_data_lake.json
+  provider = aws.core_services
+  name     = "DesignSystemS3ReplicatePlatformDataLake"
+  policy   = data.aws_iam_policy_document.s3_replicate_data_lake.json
 }
 
 resource "aws_iam_role_policy_attachment" "s3_replicate_data_lake" {
