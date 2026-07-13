@@ -259,7 +259,6 @@ resource "aws_wafv2_web_acl" "amplify_docs" {
 
 # Associate WAF ACL with Amplify EN app
 resource "aws_wafv2_web_acl_association" "amplify_en" {
-  # Should I change this provider to aws.core_services_us_east_1?
   provider     = aws.us-east-1
   resource_arn = aws_amplify_app.design_system_docs_en.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
@@ -267,7 +266,6 @@ resource "aws_wafv2_web_acl_association" "amplify_en" {
 
 # Associate the same WAF ACL with Amplify FR app
 resource "aws_wafv2_web_acl_association" "amplify_fr" {
-  # Should I change this provider to aws.core_services_us_east_1?
   provider     = aws.us-east-1
   resource_arn = aws_amplify_app.design_system_docs_fr.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
