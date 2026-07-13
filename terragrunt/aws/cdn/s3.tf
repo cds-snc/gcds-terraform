@@ -1,5 +1,5 @@
 module "cdn_origin" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v10.6.2"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.3.5"
   bucket_name       = "${var.product_name}-${var.env}-cdn"
   billing_tag_value = var.billing_code
 
@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "cloudfront_get_object" {
 
 # Bucket to store cloudfront logs
 module "cloudfront_logs" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v9.4.4"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.3.5"
   bucket_name       = "${var.product_name}-${var.env}-cdn-logs"
   billing_tag_value = var.billing_code
 
@@ -100,13 +100,15 @@ resource "aws_s3_bucket_ownership_controls" "cloudfront_logs_ownership_controls"
 # Replicate the data to the Platform Data Lake
 #
 resource "aws_iam_role" "s3_replicate_data_lake" {
+  provider           = aws.core_services
   name               = "DesignSystemS3ReplicatePlatformDataLake"
   assume_role_policy = data.aws_iam_policy_document.s3_replicate_assume.json
 }
 
 resource "aws_iam_policy" "s3_replicate_data_lake" {
-  name   = "DesignSystemS3ReplicatePlatformDataLake"
-  policy = data.aws_iam_policy_document.s3_replicate_data_lake.json
+  provider = aws.core_services
+  name     = "DesignSystemS3ReplicatePlatformDataLake"
+  policy   = data.aws_iam_policy_document.s3_replicate_data_lake.json
 }
 
 resource "aws_iam_role_policy_attachment" "s3_replicate_data_lake" {

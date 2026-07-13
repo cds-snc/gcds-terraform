@@ -11,6 +11,7 @@ resource "aws_cloudwatch_log_metric_filter" "gc_design_system_error" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "gc_design_system_error" {
+  provider            = aws.core_services
   alarm_name          = "GC Design System Errors"
   alarm_description   = "Errors logged by the GC Design System"
   comparison_operator = "GreaterThanOrEqualToThreshold"
@@ -40,6 +41,7 @@ resource "aws_cloudwatch_log_metric_filter" "gc_design_system_warning" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "gc_design_system_warning" {
+  provider            = aws.core_services
   alarm_name          = "GC Design System Warnings"
   alarm_description   = "Warnings logged by the GC Design System"
   comparison_operator = "GreaterThanOrEqualToThreshold"

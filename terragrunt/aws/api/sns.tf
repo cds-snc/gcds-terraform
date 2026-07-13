@@ -2,6 +2,7 @@
 # SNS: topic & subscription
 #
 resource "aws_sns_topic" "cloudwatch_warning" {
+  provider          = aws.core_services
   name              = "gc-design-system-cloudwatch-alarms-warning"
   kms_master_key_id = aws_kms_key.sns_cloudwatch.id
 
@@ -12,6 +13,7 @@ resource "aws_sns_topic" "cloudwatch_warning" {
 }
 
 resource "aws_sns_topic_subscription" "alert_warning" {
+  provider  = aws.core_services
   topic_arn = aws_sns_topic.cloudwatch_warning.arn
   protocol  = "https"
   endpoint  = var.slack_webhook_url
@@ -20,6 +22,7 @@ resource "aws_sns_topic_subscription" "alert_warning" {
 # KMS Key for SNS CloudWatch topic
 # This key is used to encrypt messages sent to the SNS topic for CloudWatch alarms.
 resource "aws_kms_key" "sns_cloudwatch" {
+  provider = aws.core_services
   # checkov:skip=CKV_AWS_7: key rotation not required for CloudWatch SNS topic's messages
   description = "KMS key for CloudWatch SNS topic"
   policy      = data.aws_iam_policy_document.sns_cloudwatch.json

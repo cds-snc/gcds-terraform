@@ -1,6 +1,6 @@
 # WAF ACL for Design System Documentation (EN)
 resource "aws_wafv2_web_acl" "amplify_docs" {
-  provider = aws.us-east-1
+  provider = aws.core_services_us_east_1
   name     = "waf-${var.product_name}-amplify-docs-${var.env}"
   scope    = "CLOUDFRONT"
 
@@ -259,15 +259,14 @@ resource "aws_wafv2_web_acl" "amplify_docs" {
 
 # Associate WAF ACL with Amplify EN app
 resource "aws_wafv2_web_acl_association" "amplify_en" {
-  provider     = aws.us-east-1
+  provider     = aws.core_services_us_east_1
   resource_arn = aws_amplify_app.design_system_docs_en.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
 }
 
 # Associate the same WAF ACL with Amplify FR app
 resource "aws_wafv2_web_acl_association" "amplify_fr" {
-  provider     = aws.us-east-1
+  provider     = aws.core_services_us_east_1
   resource_arn = aws_amplify_app.design_system_docs_fr.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
 }
-
