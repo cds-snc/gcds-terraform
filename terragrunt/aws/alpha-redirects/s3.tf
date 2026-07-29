@@ -1,13 +1,13 @@
 # S3 bucket to host website redirect from alpha EN domain to canonical CA EN domain
 module "alpha_redirect_bucket_en" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.3.5"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.4.5"
   bucket_name       = var.alpha_domain_redirect_en
   billing_tag_value = var.billing_code
 }
 
 # S3 bucket to host website redirect from alpha FR domain to canonical CA FR domain
 module "alpha_redirect_bucket_fr" {
-  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.3.5"
+  source            = "github.com/cds-snc/terraform-modules//S3?ref=v11.4.5"
   bucket_name       = var.alpha_domain_redirect_fr
   billing_tag_value = var.billing_code
 }
