@@ -154,11 +154,12 @@ locals {
   # Flipping var.astro_domain_stage to "canada_ca" is the production cutover.
   astro_on_canada_ca = var.astro_domain_stage == "canada_ca"
 
-  astro_domain_en = local.astro_on_canada_ca ? var.ca_domain_website_en : var.alpha_domain_website_en
-  astro_domain_fr = local.astro_on_canada_ca ? var.ca_domain_website_fr : var.alpha_domain_website_fr
+  # When in alpha stage, use canada.ca domains with a staging prefix (e.g., astro-staging).
+  # When in canada_ca stage, use the apex (no prefix).
+  astro_domain_en = var.ca_domain_website_en
+  astro_domain_fr = var.ca_domain_website_fr
 
-  # The canada.ca domains are served at the apex; the alpha domains need a prefix
-  # because their apex already aliases the alpha-redirects CloudFront distributions.
+  # Prefix: empty for production, "astro-staging" for alpha stage
   astro_subdomain_prefix = local.astro_on_canada_ca ? "" : var.astro_alpha_subdomain_prefix
 }
 
@@ -244,7 +245,7 @@ resource "aws_amplify_branch" "main_astro" {
 }
 
 # English domain for the Astro app.
-# alpha stage     -> astro.design-system.alpha.canada.ca
+# alpha stage     -> astro-staging.design-system.canada.ca
 # canada_ca stage -> design-system.canada.ca
 resource "aws_amplify_domain_association" "astro_en" {
   app_id      = aws_amplify_app.design_system_docs_astro.id
@@ -259,7 +260,7 @@ resource "aws_amplify_domain_association" "astro_en" {
 }
 
 # French domain for the Astro app.
-# alpha stage     -> astro.systeme-design.alpha.canada.ca
+# alpha stage     -> astro-staging.systeme-design.canada.ca
 # canada_ca stage -> systeme-design.canada.ca
 resource "aws_amplify_domain_association" "astro_fr" {
   app_id      = aws_amplify_app.design_system_docs_astro.id

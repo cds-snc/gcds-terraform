@@ -54,7 +54,7 @@ variable "astro_platform" {
 variable "astro_domain_stage" {
   description = <<-EOT
     Which domains the Astro app is served from.
-      alpha     - staging subdomains under the alpha zones (see astro_alpha_subdomain_prefix)
+      alpha     - staging subdomains under canada.ca domains (see astro_alpha_subdomain_prefix)
       canada_ca - the production design-system.canada.ca / systeme-design.canada.ca domains
 
     Amplify will not let two apps claim the same domain, so "canada_ca" is only
@@ -73,10 +73,8 @@ variable "astro_domain_stage" {
 variable "astro_alpha_subdomain_prefix" {
   description = <<-EOT
     Subdomain prefix used while astro_domain_stage is "alpha", producing e.g.
-    astro.design-system.alpha.canada.ca. A prefix is required because the apex of
-    each alpha zone is already an alias record for the alpha-redirects CloudFront
-    distributions. Ignored when astro_domain_stage is "canada_ca".
+    astro-staging.design-system.canada.ca. Ignored when astro_domain_stage is "canada_ca".
   EOT
   type        = string
-  default     = "astro"
+  default     = "astro-staging"
 }
