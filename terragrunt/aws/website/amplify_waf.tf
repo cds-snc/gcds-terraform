@@ -270,3 +270,15 @@ resource "aws_wafv2_web_acl_association" "amplify_fr" {
   resource_arn = aws_amplify_app.design_system_docs_fr.arn
   web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
 }
+
+# Associate the same WAF ACL with the Astro app.
+#
+# The Astro app reuses the ACL above rather than defining its own: the six rules
+# are identical, and the /api/submission rate limiting, method restriction and
+# endpoint protection all apply unchanged because the Astro app keeps the same
+# /api/submission route. Reusing the ACL also avoids a second set of WAF charges.
+resource "aws_wafv2_web_acl_association" "amplify_astro" {
+  provider     = aws.core_services_us_east_1
+  resource_arn = aws_amplify_app.design_system_docs_astro.arn
+  web_acl_arn  = aws_wafv2_web_acl.amplify_docs.arn
+}
