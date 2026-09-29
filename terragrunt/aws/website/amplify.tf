@@ -6,6 +6,12 @@ resource "aws_amplify_app" "design_system_docs_en" {
   # -- needed when setting up amplify or making changes
   access_token = var.gh_access_token
 
+  # Legacy Eleventy apps: already linked to GitHub. Don't push a rotated
+  # token or rule changes to them while the Astro app is being stood up.
+  lifecycle {
+    ignore_changes = [access_token, custom_rule]
+  }
+
   build_spec = file("${path.module}/build_spec/amplify.yml")
 
   # 404 redirects
@@ -51,6 +57,12 @@ resource "aws_amplify_app" "design_system_docs_fr" {
   # Github personal access token
   # -- needed when setting up amplify or making changes
   access_token = var.gh_access_token
+
+  # Legacy Eleventy apps: already linked to GitHub. Don't push a rotated
+  # token or rule changes to them while the Astro app is being stood up.
+  lifecycle {
+    ignore_changes = [access_token, custom_rule]
+  }
 
   build_spec = file("${path.module}/build_spec/amplify.yml")
 
@@ -177,11 +189,10 @@ resource "aws_amplify_app" "design_system_docs_astro" {
   build_spec = file("${path.module}/build_spec/${var.astro_build_spec}")
 
   environment_variables = {
-    # Required for Gen 2 monorepo builds: tells Amplify which subfolder to build.
-    AMPLIFY_MONOREPO_APP_ROOT = var.astro_app_root
+    # No AMPLIFY_MONOREPO_APP_ROOT on purpose -- see build_spec/amplify_astro.yml.
 
-    # Always deploy the full artifact set. Diff deploys are unreliable for a
-    # monorepo app whose output directory sits below the repo root.
+    # Always deploy the full artifact set. Diff deploys are unreliable when the
+    # output directory sits below the repo root.
     AMPLIFY_DIFF_DEPLOY = "false"
 
     # Amazon Linux 2023 image, which ships a Node version Astro supports.

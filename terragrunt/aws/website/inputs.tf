@@ -23,12 +23,6 @@ variable "astro_branch_name" {
   default     = "main"
 }
 
-variable "astro_app_root" {
-  description = "Path to the Astro project inside the gcds-docs repo. Must match `appRoot` in the build spec."
-  type        = string
-  default     = "docs"
-}
-
 variable "astro_build_spec" {
   description = "Build spec file under build_spec/ used by the Astro app. Swap for an SSR build spec when moving off static hosting."
   type        = string
