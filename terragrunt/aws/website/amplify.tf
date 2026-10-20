@@ -157,9 +157,10 @@ resource "aws_amplify_domain_association" "gcds_fr" {
 # Amplify evaluates custom rules per app, not per domain -- `condition` on a
 # custom_rule only matches country codes, never the Host header. Per-domain
 # behaviour (design-system.canada.ca -> /en/, systeme-design.canada.ca -> /fr/)
-# is therefore handled by docs/src/pages/index.astro, which reads
-# location.hostname and redirects. Once the app moves to WEB_COMPUTE, that page
-# is replaced by Astro middleware reading the Host header server-side.
+# is therefore handled in the gcds-docs repo by the inline script at the top of
+# docs/src/components/BaseHead.astro, which reads location.hostname and redirects.
+# Once the app moves to WEB_COMPUTE, that script is replaced by Astro middleware
+# reading the Host header server-side.
 ###############################################################################
 
 locals {
@@ -197,6 +198,8 @@ resource "aws_amplify_app" "design_system_docs_astro" {
 
     # Amazon Linux 2023 image, which ships a Node version Astro supports.
     _CUSTOM_IMAGE = "amplify:al2023"
+
+    DOMAIN = "https://${var.ca_domain_website_en}"
   }
 
   # 404 redirects
