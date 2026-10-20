@@ -164,8 +164,8 @@ resource "aws_amplify_domain_association" "gcds_fr" {
 ###############################################################################
 
 locals {
-  # Flipping var.astro_domain_stage to "canada_ca" is the production cutover.
-  astro_on_canada_ca = var.astro_domain_stage == "canada_ca"
+  # Flipping var.astro_domain to "canada_ca" is the production cutover.
+  astro_on_canada_ca = var.astro_domain == "canada_ca"
 
   # When in alpha stage, use canada.ca domains with a staging prefix (e.g., astro-staging).
   # When in canada_ca stage, use the apex (no prefix).

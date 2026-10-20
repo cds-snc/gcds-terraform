@@ -45,29 +45,26 @@ variable "astro_platform" {
   }
 }
 
-variable "astro_domain_stage" {
+variable "astro_domain" {
   description = <<-EOT
     Which domains the Astro app is served from.
       alpha     - staging subdomains under canada.ca domains (see astro_alpha_subdomain_prefix)
       canada_ca - the production design-system.canada.ca / systeme-design.canada.ca domains
 
-    Amplify will not let two apps claim the same domain, so "canada_ca" is only
-    valid once the Eleventy domain associations (aws_amplify_domain_association.gcds_en
-    and .gcds_fr in amplify.tf) have been removed in the same change.
   EOT
   type        = string
   default     = "alpha"
 
   validation {
-    condition     = contains(["alpha", "canada_ca"], var.astro_domain_stage)
-    error_message = "astro_domain_stage must be either alpha or canada_ca."
+    condition     = contains(["alpha", "canada_ca"], var.astro_domain)
+    error_message = "astro_domain must be either alpha or canada_ca."
   }
 }
 
 variable "astro_alpha_subdomain_prefix" {
   description = <<-EOT
-    Subdomain prefix used while astro_domain_stage is "alpha", producing e.g.
-    astro-staging.design-system.canada.ca. Ignored when astro_domain_stage is "canada_ca".
+    Subdomain prefix used while astro_domain is "alpha", producing e.g.
+    astro-staging.design-system.canada.ca. Ignored when astro_domain is "canada_ca".
   EOT
   type        = string
   default     = "astro-staging"
