@@ -53,7 +53,7 @@ variable "astro_domain" {
 
   EOT
   type        = string
-  default     = "alpha"
+  default     = "canada_ca"
 
   validation {
     condition     = contains(["alpha", "canada_ca"], var.astro_domain)
