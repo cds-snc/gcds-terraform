@@ -1,32 +1,31 @@
-# Amplify Gen 2 build spec for the Astro documentation site.
+# Build spec for the Astro documentation site.
 #
-# The `applications` array (with `appRoot`) is the Gen 2 monorepo format: it tells
-# Amplify the app lives in a subfolder of the gcds-docs repo rather than at the root.
-# This is what lets the Astro site coexist with the Eleventy site in one repository.
-#
-# `appRoot` is relative to the repo root       -> gcds-docs/docs
-# `baseDirectory` is relative to `appRoot`     -> gcds-docs/docs/dist
+# The Astro project lives in docs/ inside the gcds-docs repo. This is deliberately
+# NOT an Amplify monorepo spec (no `applications`/`appRoot`, no
+# AMPLIFY_MONOREPO_APP_ROOT): in monorepo mode Amplify requires the repo-root
+# customHttp.yml to use the monorepo format too, but that file is shared with the
+# Eleventy EN/FR apps, which need the flat format. A plain spec that cd's into
+# docs/ lets all three apps share the same security headers until cutover.
 #
 # SSR UPGRADE: when moving to server-side rendering, copy this file to
-# amplify_astro_ssr.yml, change `baseDirectory` to `.amplify-hosting`, and point
-# var.astro_build_spec at the new file (see inputs.tf). Astro's AWS Amplify adapter
-# writes the deployment bundle to .amplify-hosting rather than dist.
+# amplify_astro_ssr.yml, change `baseDirectory` to `docs/.amplify-hosting`, and
+# point var.astro_build_spec at the new file (see inputs.tf).
 version: 1
-applications:
-  - appRoot: docs
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci --cache .npm --prefer-offline
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: dist
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - .npm/**/*
-          - node_modules/**/*
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Subshell: Amplify keeps the working directory between commands and
+        # phases, so a bare `cd docs` here would break the `cd docs` in build.
+        - (cd docs && npm ci --cache .npm --prefer-offline)
+    build:
+      commands:
+        - cd docs && npm run build
+  artifacts:
+    baseDirectory: docs/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - docs/.npm/**/*
+      - docs/node_modules/**/*
