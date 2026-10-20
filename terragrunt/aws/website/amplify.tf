@@ -184,6 +184,12 @@ resource "aws_amplify_app" "design_system_docs_astro" {
   # -- needed when setting up amplify or making changes
   access_token = var.gh_access_token
 
+  # This app is already linked to GitHub.
+  # Don't push a rotated token or rule changes to it while the Astro app is being stood up.
+  lifecycle {
+    ignore_changes = [access_token, custom_rule]
+  }
+
   # WEB = static hosting of docs/dist. Switch to WEB_COMPUTE for SSR.
   platform = var.astro_platform
 
