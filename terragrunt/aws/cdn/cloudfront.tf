@@ -3,9 +3,10 @@ resource "aws_cloudfront_origin_access_identity" "cdn" {
 }
 
 resource "aws_cloudfront_distribution" "cdn" {
-  enabled     = true
-  aliases     = [var.alpha_domain_cdn]
-  price_class = "PriceClass_All"
+  enabled             = true
+  aliases             = [var.alpha_domain_cdn]
+  price_class         = "PriceClass_All"
+  default_root_object = "index.html"
 
   origin {
     domain_name = module.cdn_origin.s3_bucket_regional_domain_name
@@ -57,9 +58,10 @@ resource "aws_cloudfront_origin_access_identity" "ca_cdn" {
 }
 
 resource "aws_cloudfront_distribution" "ca_cdn" {
-  enabled     = true
-  aliases     = [var.ca_domain_cdn]
-  price_class = "PriceClass_All"
+  enabled             = true
+  aliases             = [var.ca_domain_cdn]
+  price_class         = "PriceClass_All"
+  default_root_object = "index.html"
 
   origin {
     domain_name = module.cdn_origin.s3_bucket_regional_domain_name
