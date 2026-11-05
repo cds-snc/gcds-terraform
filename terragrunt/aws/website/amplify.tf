@@ -1,159 +1,7 @@
-resource "aws_amplify_app" "design_system_docs_en" {
-  name       = "Design System (EN)"
-  repository = "https://github.com/cds-snc/gcds-docs"
-
-  # Github personal access token
-  # -- needed when setting up amplify or making changes
-  access_token = var.gh_access_token
-
-  # Legacy Eleventy apps: already linked to GitHub. Don't push a rotated
-  # token or rule changes to them while the Astro app is being stood up.
-  lifecycle {
-    ignore_changes = [access_token, custom_rule]
-  }
-
-  build_spec = file("${path.module}/build_spec/amplify.yml")
-
-  # 404 redirects
-  custom_rule {
-    source = "/<*>"
-    target = "/404"
-    status = "404"
-  }
-
-  # Redirect for the french website
-  custom_rule {
-    source = "/fr/<*>"
-    target = "https://${var.ca_domain_website_fr}/fr/<*>"
-    status = "301"
-  }
-
-  # Redirect for the homepage
-  custom_rule {
-    source = "/"
-    target = "/en/"
-    status = "200"
-  }
-
-  # Redirect for the get started pages
-  custom_rule {
-    source = "/en/get-started/<*>"
-    target = "/en/start-to-use/<*>"
-    status = "301"
-  }
-
-  # Redirect for the API contact form submission
-  custom_rule {
-    source = "/api/submission"
-    target = "${var.api_function_url}submission"
-    status = "200"
-  }
-}
-
-resource "aws_amplify_app" "design_system_docs_fr" {
-  name       = "Design System (FR)"
-  repository = "https://github.com/cds-snc/gcds-docs"
-
-  # Github personal access token
-  # -- needed when setting up amplify or making changes
-  access_token = var.gh_access_token
-
-  # Legacy Eleventy apps: already linked to GitHub. Don't push a rotated
-  # token or rule changes to them while the Astro app is being stood up.
-  lifecycle {
-    ignore_changes = [access_token, custom_rule]
-  }
-
-  build_spec = file("${path.module}/build_spec/amplify.yml")
-
-  # 404 redirects
-  custom_rule {
-    source = "/<*>"
-    target = "/404"
-    status = "404"
-  }
-
-  # Redirect for english website
-  custom_rule {
-    source = "/en/<*>"
-    target = "https://${var.ca_domain_website_en}/en/<*>"
-    status = "301"
-  }
-
-  # Redirect for the homepage
-  custom_rule {
-    source = "/"
-    target = "/fr/"
-    status = "200"
-  }
-
-  # Redirect for the API contact form submission
-  custom_rule {
-    source = "/api/submission"
-    target = "${var.api_function_url}submission"
-    status = "200"
-  }
-}
-
-
-resource "aws_amplify_branch" "main_en" {
-  app_id      = aws_amplify_app.design_system_docs_en.id
-  branch_name = "main"
-
-  # Could be one of: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
-  stage = "PRODUCTION"
-
-  display_name = "production"
-
-  # We only need one preview environment since it contains both english and french content
-  enable_pull_request_preview = true
-}
-
-resource "aws_amplify_branch" "main_fr" {
-  app_id      = aws_amplify_app.design_system_docs_fr.id
-  branch_name = "main"
-
-  # Could be one of: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL_REQUEST
-  stage = "PRODUCTION"
-
-  display_name = "production"
-
-  # We only need one preview environment since it contains both english and french content
-  enable_pull_request_preview = true
-}
-
-# Removing the domain association for eleventy apps
-# Custom domain (design-system.canada.ca) for the english amplify app
-# resource "aws_amplify_domain_association" "gcds_en" {
-#   app_id      = aws_amplify_app.design_system_docs_en.id
-#   domain_name = var.ca_domain_website_en
-#
-#   wait_for_verification = false
-#
-#   sub_domain {
-#     branch_name = aws_amplify_branch.main_en.branch_name
-#     prefix      = ""
-#   }
-# }
-
-# Removing the domain association for eleventy apps
-# Custom domain (systeme-design.canada.ca) for the french amplify app
-# resource "aws_amplify_domain_association" "gcds_fr" {
-#   app_id      = aws_amplify_app.design_system_docs_fr.id
-#   domain_name = var.ca_domain_website_fr
-#
-#   wait_for_verification = false
-#
-#   sub_domain {
-#     branch_name = aws_amplify_branch.main_fr.branch_name
-#     prefix      = ""
-#   }
-# }
-
 ###############################################################################
 # Astro documentation site (Amplify Gen 2)
 #
-# Unlike the Eleventy setup above, this is a SINGLE app serving both languages.
+# Unlike the Eleventy setup before, this is a SINGLE app serving both languages.
 # Both custom domains point at the same branch of the same app.
 #
 # Amplify evaluates custom rules per app, not per domain -- `condition` on a
@@ -274,6 +122,13 @@ resource "aws_amplify_domain_association" "astro_en" {
   domain_name = local.astro_domain_en
 
   wait_for_verification = false
+
+  # Pull request previews: Amplify names each preview branch "pr-<N>" and, with
+  # automatic subdomains on, serves it at pr-<N>.design-system.canada.ca. The
+  # subdomain is deleted when the PR closes. The pattern keeps any other
+  # auto-detected branches from getting a subdomain.
+  enable_auto_sub_domain            = true
+  auto_sub_domain_creation_patterns = ["pr*"]
 
   sub_domain {
     branch_name = aws_amplify_branch.main_astro.branch_name
