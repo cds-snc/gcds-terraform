@@ -4,6 +4,8 @@ resource "aws_cloudfront_distribution" "alpha_redirect_en" {
   is_ipv6_enabled = true
   comment         = "Alpha EN domain redirect to ${var.ca_domain_website_en}"
 
+  default_root_object = "index.html"
+
   aliases     = [var.alpha_domain_website_en]
   price_class = "PriceClass_All"
 
@@ -57,6 +59,8 @@ resource "aws_cloudfront_distribution" "alpha_redirect_fr" {
   enabled         = true
   is_ipv6_enabled = true
   comment         = "Alpha FR domain redirect to ${var.ca_domain_website_fr}"
+
+  default_root_object = "index.html"
 
   aliases     = [var.alpha_domain_website_fr]
   price_class = "PriceClass_All"
